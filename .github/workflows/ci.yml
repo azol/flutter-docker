@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: images/base/Dockerfile
+
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Derive Flutter version from Dockerfile
+        id: vars
+        run: |
+          set -euo pipefail
+          DOCKERFILE="images/base/Dockerfile"
+
+          version="$(
+            awk -F= '/^[[:space:]]*ARG[[:space:]]+FLUTTER_VERSION[[:space:]]*=/ {
+              gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2);
+              gsub(/^["'\'']|["'\'']$/, "", $2);
+              print $2; exit
+            }' "$DOCKERFILE"
+          )"
+          [ -n "$version" ] || { echo "FLUTTER_VERSION arg not found in Dockerfile" >&2; exit 1; }
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build test image
+        uses: docker/build-push-action@v6
+        with:
+          context: images/base
+          file: images/base/Dockerfile
+          push: false
+          load: true
+          platforms: linux/amd64
+          build-args: |
+            FLUTTER_VERSION=${{ steps.vars.outputs.version }}
+          tags: test-flutter:${{ steps.vars.outputs.version }}
+          cache-from: type=gha,scope=flutter
+          cache-to: type=gha,scope=flutter,mode=max
+          provenance: false
+
+      - name: Smoke test
+        run: |
+          docker run --rm \
+            --platform=linux/amd64 \
+            test-flutter:${{ steps.vars.outputs.version }} \
+            sh -c '
+              flutter --version &&
+              flutter create test_app &&
+              cd test_app &&
+              flutter build web
+            '
