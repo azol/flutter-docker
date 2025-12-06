@@ -35,7 +35,8 @@ RUN set -eux \
  && [ -n "${ARCHIVE}" ] \
  && mkdir -p "${FLUTTER_HOME}" \
  && curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/${ARCHIVE}" \
-      | tar -xJ --no-same-owner --strip-components=1 -C "${FLUTTER_HOME}"
+      | tar -xJ --no-same-owner --strip-components=1 -C "${FLUTTER_HOME}" \
+ && git config --system --add safe.directory "${FLUTTER_HOME}"
 
 USER flutter
 WORKDIR /app
@@ -46,10 +47,9 @@ RUN set -eux \
 
 CMD ["/bin/sh"]
 
-LABEL org.opencontainers.image.title="DF Flutter SDK" \
-      org.opencontainers.image.description="DF Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase." \
-      org.opencontainers.image.version="DF ${FLUTTER_VERSION}" \
-      org.opencontainers.image.licenses="DF BSD-3-Clause" \
-      org.opencontainers.image.documentation="DF ddd" \
-      org.opencontainers.image.vendor="DF Artem Zolochevskii" \
-      org.opencontainers.image.authors="DF Artem Zolochevskii"
+LABEL org.opencontainers.image.title="Flutter SDK" \
+      org.opencontainers.image.description="Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase." \
+      org.opencontainers.image.version="${FLUTTER_VERSION}" \
+      org.opencontainers.image.licenses="BSD-3-Clause" \
+      org.opencontainers.image.vendor="Artem Zolochevskii" \
+      org.opencontainers.image.authors="Artem Zolochevskii"

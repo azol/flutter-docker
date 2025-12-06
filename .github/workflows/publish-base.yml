@@ -1,4 +1,4 @@
-name: Build & publish Flutter base image
+name: Build & publish Flutter image
 
 on:
   push:
@@ -77,6 +77,12 @@ jobs:
             type=raw,value=latest,enable=${{ !contains(github.ref_name, '.pre') }}
             type=raw,value=web
             type=raw,value=base
+          labels: |
+            org.opencontainers.image.title=Flutter SDK
+            org.opencontainers.image.licenses=BSD-3-Clause
+            org.opencontainers.image.description=Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.vars.outputs.version }}
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
@@ -90,5 +96,5 @@ jobs:
           build-args: |
             FLUTTER_VERSION=${{ steps.vars.outputs.version }}
           tags: ${{ steps.meta.outputs.tags }}
-          # labels: ${{ steps.meta.outputs.labels }}
-          # annotations: ${{ steps.meta.outputs.annotations }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
