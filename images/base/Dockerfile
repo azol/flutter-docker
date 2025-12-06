@@ -42,7 +42,7 @@ USER flutter
 WORKDIR /app
 
 RUN set -eux \
- && flutter --versions \
+ && flutter --version \
  && dart --version
 
 CMD ["/bin/sh"]
