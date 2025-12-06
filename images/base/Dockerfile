@@ -40,6 +40,10 @@ RUN set -eux \
 USER flutter
 WORKDIR /app
 
+RUN ls -l /opt/
+
+RUN ls -l /opt/flutter/
+
 CMD ["/bin/sh"]
 
 LABEL org.opencontainers.image.title="Flutter SDK" \
