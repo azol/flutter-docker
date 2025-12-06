@@ -79,7 +79,7 @@ jobs:
             type=raw,value=base
           labels: |
             org.opencontainers.image.title=flutter
-            org.opencontainers.image.description='Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.'
+            org.opencontainers.image.description=Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}#readme
             org.opencontainers.image.licenses=MIT
