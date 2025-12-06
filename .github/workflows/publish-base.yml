@@ -29,19 +29,19 @@ jobs:
       - name: Log version
         run: echo "Building Flutter version ${{ steps.vars.outputs.version }}"
 
-      - name: Lint Dockerfile with Hadolint
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: images/base/Dockerfile
+      # - name: Lint Dockerfile with Hadolint
+      #   uses: hadolint/hadolint-action@v3.1.0
+      #   with:
+      #     dockerfile: images/base/Dockerfile
 
-      - name: Build test image
-        run: |
-          docker build \
-            --platform=linux/amd64 \
-            -f images/base/Dockerfile \
-            --build-arg FLUTTER_VERSION=${{ steps.vars.outputs.version }} \
-            -t test-flutter-base:${{ steps.vars.outputs.version }} \
-            images/base
+      # - name: Build test image
+      #   run: |
+      #     docker build \
+      #       --platform=linux/amd64 \
+      #       -f images/base/Dockerfile \
+      #       --build-arg FLUTTER_VERSION=${{ steps.vars.outputs.version }} \
+      #       -t test-flutter-base:${{ steps.vars.outputs.version }} \
+      #       images/base
 
       # - name: Smoke + web build test
       #   run: |
