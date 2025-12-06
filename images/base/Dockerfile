@@ -22,7 +22,7 @@ ENV PATH="${FLUTTER_HOME}/bin:${PATH}"
 RUN set -eux \
  && echo "export PATH=\"${FLUTTER_HOME}/bin:\$PATH\"" > /etc/profile.d/flutter.sh \
  && ln -sf "${FLUTTER_HOME}/bin/flutter" /usr/local/bin/flutter \
- && ln -sf "${FLUTTER_HOME}/bin/dart"    /usr/local/bin/dart
+ && ln -sf "${FLUTTER_HOME}/bin/dart" /usr/local/bin/dart
 
 ARG FLUTTER_VERSION=3.38.4
 ENV FLUTTER_VERSION="${FLUTTER_VERSION}"
@@ -35,19 +35,21 @@ RUN set -eux \
  && [ -n "${ARCHIVE}" ] \
  && mkdir -p "${FLUTTER_HOME}" \
  && curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/${ARCHIVE}" \
-      | tar -xJ --strip-components=1 -C "${FLUTTER_HOME}"
+      | tar -xJ --no-same-owner --strip-components=1 -C "${FLUTTER_HOME}"
 
 USER flutter
 WORKDIR /app
 
-RUN ls -l /opt/
-
-RUN ls -l /opt/flutter/
+RUN set -eux \
+ && flutter --versions \
+ && dart --version
 
 CMD ["/bin/sh"]
 
-LABEL org.opencontainers.image.title="Flutter SDK" \
-      org.opencontainers.image.description="Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase." \
-      org.opencontainers.image.licenses="BSD-3-Clause" \
-      org.opencontainers.image.vendor="Artem Zolochevskii" \
-      org.opencontainers.image.authors="Artem Zolochevskii"
+LABEL org.opencontainers.image.title="DF Flutter SDK" \
+      org.opencontainers.image.description="DF Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase." \
+      org.opencontainers.image.version="DF ${FLUTTER_VERSION}" \
+      org.opencontainers.image.licenses="DF BSD-3-Clause" \
+      org.opencontainers.image.documentation="DF ddd" \
+      org.opencontainers.image.vendor="DF Artem Zolochevskii" \
+      org.opencontainers.image.authors="DF Artem Zolochevskii"
