@@ -10,9 +10,10 @@ RUN set -eux \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       ca-certificates \
       curl \
-      xz-utils \
       git \
       jq \
+      unzip \
+      xz-utils \
  && rm -rf /var/lib/apt/lists/*
 
 ARG FLUTTER_HOME=/opt/flutter
