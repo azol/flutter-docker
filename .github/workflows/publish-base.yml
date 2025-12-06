@@ -84,16 +84,11 @@ jobs:
             org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.version=${{ steps.vars.outputs.version }}
           annotations: |
-            manifest:org.opencontainers.image.title=Flutter SDK
-            manifest:org.opencontainers.image.licenses=BSD-3-Clause
-            manifest:org.opencontainers.image.description=Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.
-            manifest:org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}
-            manifest:org.opencontainers.image.version=${{ steps.vars.outputs.version }}
-            index:org.opencontainers.image.title=Flutter SDK
-            index:org.opencontainers.image.licenses=BSD-3-Clause
-            index:org.opencontainers.image.description=Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.
-            index:org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}
-            index:org.opencontainers.image.version=${{ steps.vars.outputs.version }}
+            org.opencontainers.image.title=Flutter SDK
+            org.opencontainers.image.licenses=BSD-3-Clause
+            org.opencontainers.image.description=Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase.
+            org.opencontainers.image.documentation=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.vars.outputs.version }}
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
