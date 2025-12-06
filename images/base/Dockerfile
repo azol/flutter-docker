@@ -19,19 +19,19 @@ ARG FLUTTER_HOME=/opt/flutter
 ENV PATH="${FLUTTER_HOME}/bin:${PATH}"
 
 RUN set -eux \
- && echo 'export PATH="$FLUTTER_HOME/bin:$PATH"' > /etc/profile.d/flutter.sh \
+ && echo "export PATH=\"${FLUTTER_HOME}/bin:\$PATH\"" > /etc/profile.d/flutter.sh \
  && ln -sf "${FLUTTER_HOME}/bin/flutter" /usr/local/bin/flutter \
- && ln -sf "${FLUTTER_HOME}/bin/dart" /usr/local/bin/dart
+ && ln -sf "${FLUTTER_HOME}/bin/dart"    /usr/local/bin/dart
 
 ARG FLUTTER_VERSION=3.38.4
-ENV FLUTTER_VERSION=$FLUTTER_VERSION
+ENV FLUTTER_VERSION="${FLUTTER_VERSION}"
 
 RUN set -eux \
- && if echo "$FLUTTER_VERSION" | grep -q "pre"; then CHANNEL=beta; else CHANNEL=stable; fi \
+ && if echo "${FLUTTER_VERSION}" | grep -q "pre"; then CHANNEL=beta; else CHANNEL=stable; fi \
  && ARCHIVE="$(curl -fsSL https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json \
-      | jq -r --arg ver "$FLUTTER_VERSION" --arg chan "$CHANNEL" \
+      | jq -r --arg ver "${FLUTTER_VERSION}" --arg chan "${CHANNEL}" \
         '.releases[] | select(.version == $ver and .channel == $chan) | .archive')" \
- && [ -n "$ARCHIVE" ] \
+ && [ -n "${ARCHIVE}" ] \
  && mkdir -p "${FLUTTER_HOME}" \
  && curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/${ARCHIVE}" \
       | tar -xJ --strip-components=1 -C "${FLUTTER_HOME}"
