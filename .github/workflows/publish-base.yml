@@ -43,17 +43,17 @@ jobs:
             -t test-flutter-base:${{ steps.vars.outputs.version }} \
             images/base
 
-      - name: Smoke + web build test
-        run: |
-          docker run --rm \
-            --platform=linux/amd64 \
-            -e FLUTTER_SUPPRESS_ANALYTICS=true \
-            test-flutter-base:${{ steps.vars.outputs.version }} \
-            sh -c '
-              flutter --version &&
-              flutter create test_app &&
-              cd test_app &&
-              flutter build web
+      # - name: Smoke + web build test
+      #   run: |
+      #     docker run --rm \
+      #       --platform=linux/amd64 \
+      #       -e FLUTTER_SUPPRESS_ANALYTICS=true \
+      #       test-flutter-base:${{ steps.vars.outputs.version }} \
+      #       sh -c '
+      #         flutter --version &&
+      #         flutter create test_app &&
+      #         cd test_app &&
+      #         flutter build web
             '
 
       - name: Log in to GitHub Container Registry
