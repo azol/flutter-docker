@@ -44,13 +44,10 @@ RUN set -eux \
  && flutter --version \
  && dart --version
 
+CMD ["/bin/sh"]
+
 LABEL org.opencontainers.image.title="Flutter SDK" \
       org.opencontainers.image.description="Flutter is an open source framework for building beautiful, natively compiled, multi-platform applications from a single codebase." \
-      org.opencontainers.image.url="https://github.com/azol/flutter-docker" \
-      org.opencontainers.image.documentation="https://github.com/azol/flutter-docker" \
-      org.opencontainers.image.source="https://github.com/azol/flutter-docker" \
       org.opencontainers.image.licenses="BSD-3-Clause" \
       org.opencontainers.image.vendor="Artem Zolochevskii" \
       org.opencontainers.image.authors="Artem Zolochevskii"
-
-CMD ["/bin/sh"]
