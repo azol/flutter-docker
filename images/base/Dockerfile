@@ -36,7 +36,7 @@ RUN set -eux \
  && mkdir -p "${FLUTTER_HOME}" \
  && curl -fsSL "https://storage.googleapis.com/flutter_infra_release/releases/${ARCHIVE}" \
       | tar -xJ --no-same-owner --strip-components=1 -C "${FLUTTER_HOME}" \
- && git config --system --add safe.directory "${FLUTTER_HOME}"
+ && chown -R flutter:flutter "${FLUTTER_HOME}}"
 
 USER flutter
 WORKDIR /app
